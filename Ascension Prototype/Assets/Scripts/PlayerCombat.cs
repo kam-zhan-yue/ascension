@@ -84,10 +84,12 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("We hit " + enemy.name);
-            if(enemy.tag == "Skeleton")
+            if (enemy.tag == "Skeleton")
                 enemy.GetComponent<Skeleton>().TakeDamage(damage, knockback);
-            else if(enemy.tag == "FlyingEye")
+            else if (enemy.tag == "FlyingEye")
                 enemy.GetComponent<FlyingEye>().TakeDamage(damage, knockback);
+            else if (enemy.tag == "Boss")
+                enemy.GetComponent<Boss>().TakeDamage(damage, knockback);
         }
     }
 

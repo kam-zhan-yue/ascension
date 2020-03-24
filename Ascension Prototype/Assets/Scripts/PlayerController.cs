@@ -188,11 +188,11 @@ public class PlayerController : MonoBehaviour
             isFalling = false;
     }
 
-    public void TakeDamage(Transform enemy, float damage, float knockback)
+    public void TakeDamage(Transform enemy, int damage, float knockback)
     {
         if(health>0 && !damaged)
         {
-            health -= 1;
+            health -= damage;
             damaged = true;
             rb.velocity = Vector2.zero;
             //Decrease health
@@ -211,12 +211,27 @@ public class PlayerController : MonoBehaviour
                 //Apply a force to the left
                 rb.velocity += new Vector2(-knockback, rb.velocity.y);
             }
+            //If health goes below zero, die 
+            if (health <= 0)
+            {
+                Debug.Log("Player has died");
+                rb.velocity = Vector2.zero;
+                animator.SetBool("Dead", true);
+                Animate(false, false, false, 0, false);
+                this.enabled = false;
+            }
         }
-        else if(health<0)
+    }
+
+    public void ChargeDamage(int damage, float knockback)
+    {
+        rb.velocity += new Vector2(rb.velocity.x, knockback);
+        health -= damage;
+        damaged = true;
+        if (health <= 0)
         {
             Debug.Log("Player has died");
-            rb.velocity = Vector2.zero;
-            animator.SetBool("Dead",true);
+            animator.SetBool("Dead", true);
             Animate(false, false, false, 0, false);
             this.enabled = false;
         }

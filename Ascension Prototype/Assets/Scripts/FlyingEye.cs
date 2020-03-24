@@ -77,7 +77,7 @@ public class FlyingEye : Enemy
         //Debug.Log("Player is not in aggro range");
     }
 
-    private new void Attack()
+    public void Attack()
     {
         attacking = true;
         rb.velocity = Vector2.zero;
@@ -91,7 +91,7 @@ public class FlyingEye : Enemy
             if (hitPlayer != null)
             {
                 //Damage the player
-                player.GetComponent<PlayerController>().TakeDamage(transform, 2f, 0.5f);
+                player.GetComponent<PlayerController>().TakeDamage(transform, 1, 0.5f);
                 Debug.Log("Player is hit!");
             }
             playerDamaged = true;

@@ -270,7 +270,7 @@ MonoBehaviour:
   attackRange: 1.1
   attacking: 0
   playerDamaged: 0
-  attackTime: 1.4
+  attackTime: 0.7
   attackTimer: 0
   attackPoint: {fileID: 3679928680096927224}
   playerLayer:
@@ -279,6 +279,7 @@ MonoBehaviour:
   selfDamaged: 0
   damageTimer: 0
   damageTime: 0.3
+  stop: 0
 --- !u!114 &3679928681074000618
 MonoBehaviour:
   m_ObjectHideFlags: 0

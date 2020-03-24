@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 1641428592}
   m_Layer: 0
   m_Name: MapGenerator
-  m_TagString: Untagged
+  m_TagString: MapGenerator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -196,6 +196,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   room: {fileID: 0}
+  y:
+  - 0
+  - 0
+  - 0
+  - 0
+  x:
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!4 &1641428593
 Transform:
   m_ObjectHideFlags: 0

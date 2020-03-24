@@ -26,10 +26,10 @@ public class Enemy : MonoBehaviour
     public LayerMask wallLayer;
 
     public bool facingRight;
-    public float maxSpeed = 1;
+    public float maxSpeed;
     private float speed;
-    public int maxHealth = 100;
-    private int currentHealth;
+    public int maxHealth;
+    public int currentHealth;
 
     private int counter;
     public int choice;
@@ -49,18 +49,7 @@ public class Enemy : MonoBehaviour
     public float damageTime = 0.7f;
 
     public bool stop;
-
-    //private void Start()
-    //{
-    //    animator = GetComponent<Animator>();
-    //    rb = GetComponent<Rigidbody2D>();
-    //    currentHealth = maxHealth;
-    //    speed = maxSpeed;
-    //    facingRight = true;
-    //    player = GameObject.FindGameObjectWithTag("Player");
-    //    InvokeRepeating("MakeAChoice", 2.0f, 5.0f);
-    //    state = State.Patrolling;
-    //}
+    public bool invulnerable;
 
     public void changeHealth(int newHealth)
     {
@@ -75,56 +64,27 @@ public class Enemy : MonoBehaviour
         return speed;
     }
 
-    //void Update()
-    //{
-    //    if(selfDamaged)
-    //    {
-    //        damageTimer += Time.deltaTime;
-    //        if(damageTimer>=damageTime)
-    //        {
-    //            selfDamaged = false;
-    //            damageTimer = 0;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (!attacking)
-    //            CheckDistToPlayer();
+    public int getHealth()
+    {
+        return currentHealth;
+    }
 
-    //        Debug.Log(state);
-    //        switch (state)
-    //        {
-    //            case State.Patrolling:
-    //                Patrol(choice, CanSeeGround(groundDetection, groundCheckDistance), CanSeeWall(wallDetection, wallCheckDistance, transform, wallLayer));
-    //                break;
-
-    //            case State.Chasing:
-    //                Chase(maxSpeed, CanSeeGround(groundDetection, groundCheckDistance), CanSeeWall(wallDetection, wallCheckDistance, transform, wallLayer));
-    //                break;
-
-    //            case State.Attacking:
-    //                Attack();
-    //                break;
-    //        }
-    //    }
-    //}
-
-    public void Attack()
+    public void Attack(string attackAnim, float damageFrame, float attackTime, Transform attackPoint, int damage, float knockback)
     {
         attacking = true;
         attackTimer += Time.deltaTime;
         //Debug.Log("Player spotted, attacking...");
         animator.SetBool("Walking", false);
-        animator.SetBool("Attacking",attacking);
+        animator.SetBool(attackAnim, attacking);
 
         //If not damaged yet and at the attack frame, then damage
-        if(!playerDamaged && attackTimer >= 0.7f)
+        if(!playerDamaged && attackTimer >= damageFrame)
         {
             Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
             if(hitPlayer != null)
             {
                 //Damage the player
-                player.GetComponent<PlayerController>().TakeDamage(transform,2f, 0.5f);
+                player.GetComponent<PlayerController>().TakeDamage(transform,damage, knockback);
                 Debug.Log("Player is hit!");
             }
             playerDamaged = true;
@@ -133,7 +93,9 @@ public class Enemy : MonoBehaviour
         //If the attack animation is finished
         if(attackTimer >= attackTime)
         {
+            Debug.Log("Reset attack timer");
             attacking = false;
+            animator.SetBool(attackAnim, false);
             attackTimer = 0;
         }
     }
@@ -194,7 +156,7 @@ public class Enemy : MonoBehaviour
             if (groundInfo && !wallInfo)
             {
                 //Flip right and move right
-                Debug.Log("Player is to the right, move right");
+                //Debug.Log("Player is to the right, move right");
                 animator.SetBool("Walking", true);
                 transform.eulerAngles = new Vector3(0, 0, 0);
                 speed = Mathf.Abs(maxSpeed);
@@ -205,7 +167,7 @@ public class Enemy : MonoBehaviour
             else if (!facingRight)
             {
                 //Flip right and move right
-                Debug.Log("Player is to the left, move left");
+                //Debug.Log("Player is to the left, move left");
                 animator.SetBool("Walking", true);
                 transform.eulerAngles = new Vector3(0, 0, 0);
                 speed = Mathf.Abs(maxSpeed);
@@ -220,7 +182,7 @@ public class Enemy : MonoBehaviour
             if (groundInfo && !wallInfo)
             {
                 //Flip to the left and move left
-                Debug.Log("Player is to the right, move right");
+                //Debug.Log("Player is to the right, move right");
                 animator.SetBool("Walking", true);
                 transform.eulerAngles = new Vector3(0, -180, 0);
                 speed = -Mathf.Abs(maxSpeed);
@@ -230,7 +192,7 @@ public class Enemy : MonoBehaviour
             else if(facingRight)
             {
                 //Flip to the Left and move left 
-                Debug.Log("Player is to the left, move left");
+                //Debug.Log("Player is to the left, move left");
                 animator.SetBool("Walking", true);
                 transform.eulerAngles = new Vector3(0, -180, 0);
                 speed = -Mathf.Abs(maxSpeed);
@@ -253,14 +215,14 @@ public class Enemy : MonoBehaviour
                 {
                     if (facingRight)
                     {
-                        Debug.Log("Turn left!");
+                        //Debug.Log("Turn left!");
                         transform.eulerAngles = new Vector3(0, -180, 0);
                         speed *= -1;
                         facingRight = false;
                     }
                     else
                     {
-                        Debug.Log("Turn right!");
+                        //Debug.Log("Turn right!");
                         transform.eulerAngles = new Vector3(0, -0, 0);
                         speed *= -1;
                         facingRight = true;
@@ -275,6 +237,8 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage, float knockback)
     {
+        if (invulnerable)
+            return;
         animator.SetBool("Walking", false);
         selfDamaged = true;
         //Take damage
@@ -284,7 +248,7 @@ public class Enemy : MonoBehaviour
         {
             if (!attacking)
             {
-                Debug.Log("Add force to left");
+                Debug.Log("Enemy - Add force to left");
                 rb.velocity = Vector2.zero;
                 rb.velocity += new Vector2(-knockback, rb.velocity.y);
             }
@@ -295,7 +259,7 @@ public class Enemy : MonoBehaviour
         {
             if (!attacking)
             {
-                Debug.Log("Add force to right");
+                Debug.Log("Enemy - Add force to right");
                 rb.velocity = Vector2.zero;
                 rb.velocity += new Vector2(knockback, rb.velocity.y);
             }

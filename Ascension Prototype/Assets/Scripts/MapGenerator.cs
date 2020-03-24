@@ -239,6 +239,10 @@ public class MapGenerator : MonoBehaviour
         return max;
     }
 
+    public float[] y = new float[3];
+    public float[] x = new float[3];
+    int count = 0;
+
     void PlanRoute(int[,] route)
     {
         //Pick the first room
@@ -260,6 +264,10 @@ public class MapGenerator : MonoBehaviour
                     if (row != 0)
                     {
                         Debug.Log("Go Up");
+                        //For camera control
+                        y[count] = row - .5f;
+                        x[count] = column;
+                        count++;
                         order++;
                         row--;
                         route[row, column] = order;

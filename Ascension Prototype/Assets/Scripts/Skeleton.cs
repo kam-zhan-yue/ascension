@@ -48,7 +48,7 @@ public class Skeleton : Enemy
                     break;
 
                 case State.Attacking:
-                    Attack();
+                    Attack("Attacking", damageTime, attackTime, attackPoint,1,0.5f);
                     break;
             }
         }

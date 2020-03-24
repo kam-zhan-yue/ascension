@@ -6,6 +6,8 @@ TagManager:
   tags:
   - FlyingEye
   - Skeleton
+  - Boss
+  - MapGenerator
   layers:
   - Default
   - TransparentFX
