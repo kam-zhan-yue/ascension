@@ -33,13 +33,15 @@ public class CameraControl : MonoBehaviour
     //Map Generator Variables
     public MapGenerator MG;
 
+    private bool foundPlayer;
+
     void Start()
     {
         //Error Prevention
         //if (playerGO == null)
         //{
-        playerGO = GameObject.FindGameObjectWithTag("Player");
-        player = playerGO.transform;
+        //playerGO = GameObject.FindGameObjectWithTag("Player");
+        //player = playerGO.transform;
         MG = GameObject.FindGameObjectWithTag("MapGenerator").GetComponent<MapGenerator>();
         //}
     }
@@ -47,24 +49,18 @@ public class CameraControl : MonoBehaviour
     void FixedUpdate()
     {
         //Error Prevention
-        if (player == null)
+        if (!foundPlayer)
+            playerGO = GameObject.FindGameObjectWithTag("Player");
+        if (playerGO == null)
             return;
+        else
+        {
+            player = playerGO.transform;
+            foundPlayer = true;
+        }
+
         //Target position
         Vector3 playerPos = player.position;
-
-        ////Vertical Clamping
-        //if (YMinEnabled && YMaxEnabled)
-        //{
-        //    playerPos.y = Mathf.Clamp(player.position.y, YMinValue, YMaxValue);
-        //}
-        //else if (YMinEnabled)
-        //{
-        //    playerPos.y = Mathf.Clamp(player.position.y, YMinValue, player.position.y);
-        //}
-        //else if (YMaxEnabled)
-        //{
-        //    playerPos.y = Mathf.Clamp(player.position.y, player.position.y, YMaxValue);
-        //}
 
         //Vertical Clamping for Map Generation
         if (player.position.y < -25)
@@ -104,7 +100,7 @@ public class CameraControl : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position, playerPos, ref velocity, smoothTime);
     }
 
-    //Checks if the player is 
+    //Checks if the player is in a room that is going upwards
     public static bool PlayerIsAscending(Vector3 playerPosition, float[] y, float[] x)
     {
         bool ascending = false;
