@@ -93,6 +93,7 @@ MonoBehaviour:
   player: {fileID: 0}
   skeleton: {fileID: 0}
   flyingEye: {fileID: 3679928681074000621}
+  boss: {fileID: 0}
 --- !u!1 &3679928681074000609
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +265,7 @@ MonoBehaviour:
   facingRight: 0
   maxSpeed: 0.7
   maxHealth: 100
+  currentHealth: 0
   choice: 0
   player: {fileID: 0}
   aggroRange: 5
@@ -280,6 +282,10 @@ MonoBehaviour:
   damageTimer: 0
   damageTime: 0.3
   stop: 0
+  invulnerable: 0
+  localScale: {x: 0, y: 0, z: 0}
+  bar: {fileID: 0}
+  barForeground: {fileID: 0}
 --- !u!114 &3679928681074000618
 MonoBehaviour:
   m_ObjectHideFlags: 0

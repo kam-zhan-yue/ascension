@@ -8,6 +8,7 @@ TagManager:
   - Skeleton
   - Boss
   - MapGenerator
+  - HealthUI
   layers:
   - Default
   - TransparentFX

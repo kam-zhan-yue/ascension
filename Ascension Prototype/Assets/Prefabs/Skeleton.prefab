@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6314956378216279287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.25, y: -1.29, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 6314956379256625989}
@@ -214,6 +214,7 @@ MonoBehaviour:
   facingRight: 0
   maxSpeed: 1.5
   maxHealth: 200
+  currentHealth: 0
   choice: 0
   player: {fileID: 0}
   aggroRange: 4
@@ -229,6 +230,10 @@ MonoBehaviour:
   selfDamaged: 0
   damageTimer: 0
   damageTime: 0.7
+  stop: 0
+  invulnerable: 0
+  localScale: {x: 0, y: 0, z: 0}
+  bar: {fileID: 0}
 --- !u!114 &1790598254943414039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +261,7 @@ MonoBehaviour:
   facingRight: 0
   maxSpeed: 1.5
   maxHealth: 100
+  currentHealth: 0
   choice: 0
   player: {fileID: 0}
   aggroRange: 4
@@ -271,6 +277,10 @@ MonoBehaviour:
   selfDamaged: 0
   damageTimer: 0
   damageTime: 0.7
+  stop: 0
+  invulnerable: 0
+  localScale: {x: 0, y: 0, z: 0}
+  bar: {fileID: 0}
 --- !u!1 &6314956379256625988
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +384,7 @@ MonoBehaviour:
   player: {fileID: 0}
   skeleton: {fileID: 1790598254943414039}
   flyingEye: {fileID: 0}
+  boss: {fileID: 0}
 --- !u!1 &6314956379529433908
 GameObject:
   m_ObjectHideFlags: 0

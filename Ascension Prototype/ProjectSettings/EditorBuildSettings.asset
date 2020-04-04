@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Trial Level.unity
     guid: 85d39cd46b991e5418251ef21fa71228
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 584567d995a57ae4b8b00fc0d42e8a91
+  - enabled: 1
     path: Assets/Scenes/Map Generation.unity
     guid: 6cae3c5908586ef4c8ea00b666f20543
   - enabled: 1

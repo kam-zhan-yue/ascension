@@ -43,8 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018327dcdcadfa3458694dd0421d621f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 3
+  GameController: {fileID: 0}
+  GC: {fileID: 0}
   FlyingEye: 1
   Skeleton: 0
-  FE: {fileID: 3679928681074000609, guid: 79003cd92252f6d489bd6a32042f295c, type: 3}
+  FE: {fileID: 6733313472669239153, guid: 0ac16e966ff561143a44496e8fa81f70, type: 3}
   SK: {fileID: 6314956378216279287, guid: 5428b76e6a271b5488190f3fd7b7d3bd, type: 3}
