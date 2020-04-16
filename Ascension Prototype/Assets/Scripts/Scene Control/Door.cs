@@ -32,10 +32,14 @@ public class Door : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("New Scene");
-                //Increment level by 1
+                //Increment level by 1 and add points
                 GC.level++;
-                //Every two levels, spawn a boss scene
-                if (GC.level%2==0)
+                GC.AddPoints(200 + GC.GetMultiplier() * 100);
+                //Add bonus if bonus achieved
+                if (GC.time < GC.bonus)
+                    GC.AddPoints(100 + GC.GetMultiplier() * 50);
+                //Every three levels, spawn a boss scene
+                if (GC.level%3==0)
                 {
                     SceneManager.LoadScene(2);
                     Debug.Log("Level is now:" + GC.level);
@@ -44,6 +48,9 @@ public class Door : MonoBehaviour
                 //Else, reset scene
                 else
                 {
+                    //After every 3 rounds, increase the muliplier by 1
+                    if ((GC.level - 1) % 3 == 0)
+                        GC.ChangeMultiplier((GC.level - 1) / 3);
                     SceneManager.LoadScene(1);
                     Debug.Log("Level is now:" + GC.level);
                     Debug.Log("Spawn a regular map");

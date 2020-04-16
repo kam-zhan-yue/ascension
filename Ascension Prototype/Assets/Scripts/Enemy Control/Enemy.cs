@@ -57,6 +57,12 @@ public class Enemy : MonoBehaviour
     public GameObject bar;
     public GameObject barForeground;
 
+    GameObject GameController;
+    public GameController GC;
+
+    public int pointsToGive = 0;
+    
+
     //===============PROCEDURE===============//
     public void HealthController()
     //Purpose:          Adjusts the colour and size of the HP bar according to its value
@@ -71,10 +77,22 @@ public class Enemy : MonoBehaviour
         barForeground.transform.localScale = temp;
     }
 
+    public void FindGameController()
+    {
+        GameController = GameObject.FindGameObjectWithTag("GameController");
+        GC = GameController.GetComponent<GameController>();
+    }
+
     public void changeHealth(int newHealth)
     {
-        currentHealth = newHealth;
+        maxHealth = newHealth;
     }
+
+    public void setHealth()
+    {
+        currentHealth = maxHealth;
+    }
+
     public void changeSpeed(float newSpeed)
     {
         speed = newSpeed;
@@ -98,7 +116,7 @@ public class Enemy : MonoBehaviour
         animator.SetBool(attackAnim, attacking);
 
         //If not damaged yet and at the attack frame, then damage
-        if(!playerDamaged && attackTimer >= damageFrame)
+        if (!playerDamaged && attackTimer >= damageFrame && attackTimer <= damageFrame + 0.2f)
         {
             Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
             if(hitPlayer != null)
@@ -309,6 +327,7 @@ public class Enemy : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         GetComponent<Rigidbody2D>().isKinematic = true;
         dead = true;
+        GC.AddPoints(pointsToGive);
         if (destroyScript != null)
             destroyScript.death = true;
         if(bar!= null)

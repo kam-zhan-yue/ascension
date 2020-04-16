@@ -15,10 +15,6 @@ public class MapGenerator : MonoBehaviour
         int maxRooms = HighestRoom(route);
         Debug.Log("Highest Room Number is: " + maxRooms);
         CreateRoute(route, maxRooms);
-        //for (int i=0; i<100; i++)
-        //{
-        //    Debug.Log((int)Random.Range(1, 6));
-        //}
     }
 
     void CreateRoute(int[,] route, int maxRooms)

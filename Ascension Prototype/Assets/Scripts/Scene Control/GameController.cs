@@ -5,16 +5,21 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public int level;
-    public int points;
+    private int points;
+    private int multiplier;
     private static GameObject instance;
     public GameObject player;
     public GameObject cam;
     private bool camSpawn;
 
+    public float time;
+    public float bonus;
+
     private void Awake()
     {
         level = 1;
         points = 0;
+        multiplier = 0;
         //Error prevention to prevent more than one instance of GameController
         DontDestroyOnLoad(gameObject);
         if (instance == null)
@@ -23,21 +28,25 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
     }
 
-    //private void Update()
-    //{
-    //    if (SpawnCamera() && !camSpawn)
-    //    {
-    //        Instantiate(cam, new Vector3(player.transform.position.x, player.transform.position.y, -1), Quaternion.identity);
-    //        camSpawn = false;
-    //    }
-    //}
+    public void AddPoints(int add)
+    {
+        points += add;
+        Debug.Log("Points: " + points);
+    }
 
-    //private bool SpawnCamera()
-    //{
-    //    player = GameObject.FindGameObjectWithTag("Player");
-    //    if (player == null)
-    //        return true;
-    //    else
-    //        return false;
-    //}
+    public int GetPoints()
+    {
+        return points;
+    }
+
+    public void ChangeMultiplier(int newMultiplier)
+    {
+        multiplier = newMultiplier;
+        Debug.Log("Multiplier is: "+multiplier);
+    }
+
+    public int GetMultiplier()
+    {
+        return multiplier;
+    }
 }

@@ -8,15 +8,18 @@ public class FlyingEye : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        FindGameController();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        changeHealth(maxHealth);
+        changeHealth(maxHealth + GC.GetMultiplier() * 20);
+        setHealth();
         changeSpeed(maxSpeed);
         facingRight = false;
         player = GameObject.FindGameObjectWithTag("Player");
         //InvokeRepeating("MakeAChoice", 2.0f, 5.0f);
         state = State.Patrolling;
         localScale = transform.localScale;
+        pointsToGive = 10 + GC.GetMultiplier() * 5;
     }
 
     private void Update()
@@ -27,7 +30,13 @@ public class FlyingEye : Enemy
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(selfDamaged)
+        //Error Prevention
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            return;
+        }
+        if (selfDamaged)
         {
             damageTimer += Time.deltaTime;
             if (damageTimer >= damageTime)
@@ -36,7 +45,7 @@ public class FlyingEye : Enemy
                 damageTimer = 0;
             }
         }
-        else
+        else if (player != null)
         {
             if(!attacking)
                 CheckDistToPlayer();

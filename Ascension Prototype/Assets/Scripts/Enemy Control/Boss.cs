@@ -40,17 +40,17 @@ public class Boss : Enemy
 
     private void Start()
     {
+        FindGameController();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        //maxHealth = 1000;
-        changeHealth(maxHealth);
+        changeHealth(1000 + GC.GetMultiplier() * 100);
+        setHealth();
         maxSpeed = runningSpeed;
         changeSpeed(runningSpeed);
         facingRight = false;
         player = GameObject.FindGameObjectWithTag("Player");
-        //InvokeRepeating("MakeAChoice", 2.0f, 5.0f);
-        //state = State.Patrolling;
         bossState = BossState.Chase;
+        pointsToGive = 100 + GC.GetMultiplier() * 50;
     }
 
     private void Update()
@@ -60,6 +60,12 @@ public class Boss : Enemy
 
     private void FixedUpdate()
     {
+        //Error Prevention
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            return;
+        }
         if (selfDamaged)
         {
             damageTimer += Time.deltaTime;
@@ -69,7 +75,7 @@ public class Boss : Enemy
                 damageTimer = 0;
             }
         }
-        else
+        else if(player!=null)
         {
             if (!attacking)
                 CheckDistToPlayer();

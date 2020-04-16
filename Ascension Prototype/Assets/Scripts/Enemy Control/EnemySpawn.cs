@@ -15,7 +15,7 @@ public class EnemySpawn : MonoBehaviour
     {
         GameController = GameObject.FindGameObjectWithTag("GameController");
         GC = GameController.GetComponent<GameController>();
-        for(int i=0; i<GC.level+2; i++)
+        for(int i=0; i<GC.GetMultiplier()+3; i++)
         {
             if(FlyingEye && Spawn())
                 Instantiate(FE, new Vector3(this.transform.position.x, this.transform.position.y, -1), Quaternion.identity);

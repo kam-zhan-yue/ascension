@@ -7,14 +7,17 @@ public class Skeleton : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        FindGameController();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        changeHealth(maxHealth);
         changeSpeed(maxSpeed);
         facingRight = true;
         player = GameObject.FindGameObjectWithTag("Player");
+        changeHealth(maxHealth + GC.GetMultiplier() * 50);
+        setHealth();
         InvokeRepeating("MakeAChoice", 2.0f, 5.0f);
         state = State.Patrolling;
+        pointsToGive = 10 + GC.GetMultiplier() * 5;
     }
     private void Update()
     {
@@ -22,8 +25,13 @@ public class Skeleton : Enemy
     }
     // Update is called once per frame
     void FixedUpdate()
-    { 
-
+    {
+        //Error Prevention
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            return;
+        }
         if (selfDamaged)
         {
             damageTimer += Time.deltaTime;
@@ -33,13 +41,12 @@ public class Skeleton : Enemy
                 damageTimer = 0;
             }
         }
-        else
+        else if (player)
         {
             if (!attacking)
                 CheckDistToPlayer();
             if (stop)
                 return;
-            Debug.Log(state);
             switch (state)
             {
                 case State.Patrolling:
