@@ -6,7 +6,22 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject PauseUI;
+    public GameObject GuideUI;
+    public GameObject GameController;
+    public GameController GC;
     public static bool paused = false;
+    public static bool guideUp = true;
+
+    private void Start()
+    {
+        GameController = GameObject.FindGameObjectWithTag("GameController");
+        GC = GameController.GetComponent<GameController>();
+        if(GC.level>1)
+        {
+            GuideUI.SetActive(false);
+            guideUp = false;
+        }
+    }
 
     void Update()
     {
@@ -22,6 +37,19 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            if(guideUp)
+            {
+                GuideUI.SetActive(false);
+                guideUp = false;
+            }
+            else
+            {
+                GuideUI.SetActive(true);
+                guideUp = true;
+            }
+        }
     }
 
     //===============PROCEDURE===============//

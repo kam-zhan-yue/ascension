@@ -38,6 +38,10 @@ public class Boss : Enemy
 
     private bool lastPhase = false;
 
+    //TextController References
+    public GameObject TextController;
+    public TextController TC;
+
     private void Start()
     {
         FindGameController();
@@ -51,11 +55,14 @@ public class Boss : Enemy
         player = GameObject.FindGameObjectWithTag("Player");
         bossState = BossState.Chase;
         pointsToGive = 100 + GC.GetMultiplier() * 50;
+        TextController = GameObject.FindGameObjectWithTag("TextController");
+        TC = TextController.GetComponent<TextController>();
     }
 
     private void Update()
     {
         HealthController();
+        TC.UpdateBoss(currentHealth *100/ maxHealth);
     }
 
     private void FixedUpdate()

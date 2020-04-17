@@ -118,6 +118,7 @@ public class Enemy : MonoBehaviour
         //If not damaged yet and at the attack frame, then damage
         if (!playerDamaged && attackTimer >= damageFrame && attackTimer <= damageFrame + 0.2f)
         {
+            Debug.Log("Player is in Range");
             Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
             if(hitPlayer != null)
             {
@@ -278,7 +279,6 @@ public class Enemy : MonoBehaviour
         if (invulnerable)
             return;
         animator.SetBool("Walking", false);
-        selfDamaged = true;
         //Take damage
         currentHealth -= damage;
         //Apply knockback force to the left if player is on the right
@@ -286,17 +286,20 @@ public class Enemy : MonoBehaviour
         {
             if (!attacking)
             {
+                selfDamaged = true;
                 Debug.Log("Enemy - Add force to left");
                 rb.velocity = Vector2.zero;
                 rb.velocity += new Vector2(-knockback, rb.velocity.y);
             }
             else
                 rb.velocity += new Vector2(-2, rb.velocity.y);
+
         }
         else
         {
             if (!attacking)
             {
+                selfDamaged = true;
                 Debug.Log("Enemy - Add force to right");
                 rb.velocity = Vector2.zero;
                 rb.velocity += new Vector2(knockback, rb.velocity.y);

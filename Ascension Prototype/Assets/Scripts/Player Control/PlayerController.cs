@@ -34,13 +34,15 @@ public class PlayerController : MonoBehaviour
 
     public float fallMultiplier = 5f;
     public float lowJumpMultiplier = 2f;
-    private bool isJumping;
+    public bool isJumping;
     private bool isFalling;
     public static bool doubleJump;
+    bool stopGroundCheck;
 
     public bool damaged;
     private float damageTimer;
     private float damageTime = 0.6f;
+    
 
     //UI Elements
     HealthUI healthUI;
@@ -140,7 +142,7 @@ public class PlayerController : MonoBehaviour
 
     void Jump(bool grounded)
     {
-        if (grounded)
+        if (grounded && !stopGroundCheck)
         {
             extraJumps = extraJumpValue;
             doubleJump = false;
@@ -154,7 +156,13 @@ public class PlayerController : MonoBehaviour
             isJumping = true;
             jumpTimeCounter = jumpTime;
             //rb.velocity = Vector2.up * jumpForce;
-            extraJumps--;
+            if (grounded)
+            {
+                extraJumps--;
+                stopGroundCheck = true;
+            }
+            else
+                extraJumps-=2;
         }
         else if (Input.GetKeyDown(KeyCode.Space) && extraJumps == 0)
         {
@@ -173,6 +181,8 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = Vector2.up * jumpForce;
                 jumpTimeCounter -= Time.deltaTime;
+                if(jumpTimeCounter<0.15)
+                    stopGroundCheck = false;
             }
             else
                 isJumping = false;
@@ -233,7 +243,8 @@ public class PlayerController : MonoBehaviour
     {
         healthUI.Hurt(health);
         healthUI.Hurt(health-1);
-        rb.velocity += new Vector2(rb.velocity.x, knockback);
+        rb.velocity = Vector2.zero;
+        rb.velocity += new Vector2(0, knockback);
         health -= damage;
         damaged = true;
         if (health <= 0)

@@ -8,20 +8,61 @@ public class Door : MonoBehaviour
     Animator anim;
     public GameObject GameController;
     public GameController GC;
+    public GameObject TextController;
+    public TextController TC;
+    public GameObject Boss;
+    public Boss bossScript;
+    public bool bossLevel;
+    public bool advanceLevel;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         GameController = GameObject.FindGameObjectWithTag("GameController");
         GC = GameController.GetComponent<GameController>();
+        TextController = GameObject.FindGameObjectWithTag("TextController");
+        TC = TextController.GetComponent<TextController>();
+        //Assign Door Coordinates to the player
+        Vector2 position= transform.position;
+        //Find boss if on appropriate level
+        if(GC.level % 3 ==0)
+        {
+            bossLevel = true;
+            Boss = GameObject.FindGameObjectWithTag("Boss");
+            bossScript = Boss.GetComponent<Boss>();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            Debug.Log("Player is standing on door, opening...");
-            anim.SetBool("Open", true);
+            if (bossLevel)
+            {
+                //If boss is dead, open door
+                if (bossScript.dead)
+                {
+                    Debug.Log("Player is standing on door, opening...");
+                    TC.activateDoor = true;
+                    TC.bossText = false;
+                    anim.SetBool("Open", true);
+                }
+                else
+                {
+                    //If boss is dead, keep door closed
+                    Debug.Log("Boss is still alive, do not open door");
+                    TC.activateDoor = false;
+                    TC.bossText = true;
+                }
+            }
+            //If on a regular level, advance normally
+            else
+            {
+                Debug.Log("Player is standing on door, opening...");
+                TC.activateDoor = true;
+                TC.bossText = false;
+                anim.SetBool("Open", true);
+            }
         }
     }
 
@@ -31,6 +72,17 @@ public class Door : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.E))
             {
+                //If boss is still alive, do not progress
+                if(bossLevel)
+                {
+                    if (!bossScript.dead)
+                        return;
+                }
+                //Prevent player from skipping levels by spamming
+                if (advanceLevel)
+                    return;
+                advanceLevel = true;
+
                 Debug.Log("New Scene");
                 //Increment level by 1 and add points
                 GC.level++;
@@ -65,6 +117,8 @@ public class Door : MonoBehaviour
         {
             Debug.Log("Player has left the door, closing...");
             anim.SetBool("Open", false);
+            TC.activateDoor = false;
+            TC.bossText = false;
         }
     }
 }

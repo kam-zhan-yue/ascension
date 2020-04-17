@@ -19,7 +19,9 @@ public class HealthUI : MonoBehaviour
 
     public void Hurt(int health)
     {
-        heartAnim[health - 1].SetBool("hit", true);
+        //Error Prevention
+        if(health-1>-1)
+            heartAnim[health - 1].SetBool("hit", true);
     }
 
 }

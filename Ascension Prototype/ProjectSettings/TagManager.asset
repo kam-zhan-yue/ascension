@@ -9,6 +9,7 @@ TagManager:
   - Boss
   - MapGenerator
   - HealthUI
+  - TextController
   layers:
   - Default
   - TransparentFX
