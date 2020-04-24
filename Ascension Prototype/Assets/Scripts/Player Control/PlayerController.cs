@@ -11,12 +11,12 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     private float moveInput;
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     public Animator animator;
 
     private bool facingRight = true;
 
-    public static bool grounded;
+    public bool grounded;
     public Transform groundCheck;
     public float checkRadius;
     public LayerMask groundLayer;
@@ -36,28 +36,32 @@ public class PlayerController : MonoBehaviour
     public float lowJumpMultiplier = 2f;
     public bool isJumping;
     private bool isFalling;
-    public static bool doubleJump;
-    bool stopGroundCheck;
+    public bool doubleJump;
+    public bool stopGroundCheck;
 
     public bool damaged;
     private float damageTimer;
     private float damageTime = 0.6f;
     
-
     //UI Elements
     HealthUI healthUI;
+    PlayerUI playerUI;
+    public PlayerCombat combat;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         health = maxHealth;
         healthUI = GameObject.FindGameObjectWithTag("HealthUI").GetComponent<HealthUI>();
+        playerUI = GameObject.FindGameObjectWithTag("PlayerUI").GetComponent<PlayerUI>();
     }
 
     void FixedUpdate()
     {
         if(!damaged)
         {
+            if (combat.playerInvulnerable)
+                return;
             //Set movement to horizontal input
             moveInput = Input.GetAxis("Horizontal");
             MoveCharacter(moveInput);
@@ -96,6 +100,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             CheckSurroundings();
+            if (combat.playerInvulnerable)
+                return;
             Jump(grounded);
             Animate(doubleJump, isJumping, isFalling, moveInput, isWallSliding);
             WallSlide(isWallSliding);
@@ -181,11 +187,17 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = Vector2.up * jumpForce;
                 jumpTimeCounter -= Time.deltaTime;
-                if(jumpTimeCounter<0.15)
+                if(jumpTimeCounter<0.165)
                     stopGroundCheck = false;
             }
             else
                 isJumping = false;
+        }
+        //Catch the error if get key happens before jumptimecounter = 2
+        else if(Input.GetKey(KeyCode.Space)== false && isJumping)
+        {
+            stopGroundCheck = false;
+            isJumping = false;
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -203,7 +215,10 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(Transform enemy, int damage, float knockback)
     {
-        if(health>0 && !damaged)
+        //If blocking, then don't damage
+        if (combat.playerInvulnerable)
+            return;
+        if (health>0 && !damaged)
         {
             healthUI.Hurt(health);
             if(damage==2)
@@ -233,6 +248,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Player has died");
                 rb.velocity = Vector2.zero;
                 animator.SetBool("Dead", true);
+                playerUI.gameOver = true;
                 Animate(false, false, false, 0, false);
                 this.enabled = false;
             }
@@ -241,16 +257,20 @@ public class PlayerController : MonoBehaviour
 
     public void ChargeDamage(int damage, float knockback)
     {
-        healthUI.Hurt(health);
-        healthUI.Hurt(health-1);
+        //If blocking, then don't damage
+        if (combat.playerInvulnerable)
+            return;
         rb.velocity = Vector2.zero;
         rb.velocity += new Vector2(0, knockback);
+        healthUI.Hurt(health);
+        healthUI.Hurt(health-1);
         health -= damage;
         damaged = true;
         if (health <= 0)
         {
             Debug.Log("Player has died");
             animator.SetBool("Dead", true);
+            playerUI.gameOver = true;
             Animate(false, false, false, 0, false);
             this.enabled = false;
         }

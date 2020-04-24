@@ -43,7 +43,7 @@ public class TextController : MonoBehaviour
     {
         if(health>70)
             PhaseText(0, "The Minotaur awaits you in his dungeon", 5f);
-        else if(health>31)
+        else if(health>=29)
             PhaseText(1, "The Minotaur is angry! He will become invulnerable when charging", 4f);
         else
             PhaseText(2, "The Minotaur is tired! Avoid his heavy, sluggish attacks", 4f);

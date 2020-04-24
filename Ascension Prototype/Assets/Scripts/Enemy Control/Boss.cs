@@ -13,6 +13,7 @@ public class Boss : Enemy
     }
 
     public BossState bossState;
+    public GameObject shield;
 
     //Attacking Variables;
     public Transform lightAttackPoint;
@@ -45,10 +46,20 @@ public class Boss : Enemy
     private void Start()
     {
         FindGameController();
+        //Error Prevention
+        if (GC != null)
+        {
+            changeHealth(1000 + GC.GetMultiplier() * 100);
+            setHealth();
+        }
+        else
+        {
+            changeHealth(1000);
+            setHealth();
+        }
+        
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        changeHealth(1000 + GC.GetMultiplier() * 100);
-        setHealth();
         maxSpeed = runningSpeed;
         changeSpeed(runningSpeed);
         facingRight = false;
@@ -57,6 +68,7 @@ public class Boss : Enemy
         pointsToGive = 100 + GC.GetMultiplier() * 50;
         TextController = GameObject.FindGameObjectWithTag("TextController");
         TC = TextController.GetComponent<TextController>();
+        shield.SetActive(false);
     }
 
     private void Update()
@@ -116,6 +128,7 @@ public class Boss : Enemy
     public void MakeVulnerable()
     {
         Debug.Log("Boss is vulnerable");
+        shield.SetActive(false);
         invulnerable = false;
         animator.SetBool("lightAttack", false);
         animator.SetBool("heavyAttack", false);
@@ -133,6 +146,7 @@ public class Boss : Enemy
     public void Charge(bool wallInfo)
     {
         lastPhase = true;
+        shield.SetActive(true);
         animator.SetBool("lightAttack", false);
         animator.SetBool("heavyAttack", false);
         chargingTime += Time.deltaTime;

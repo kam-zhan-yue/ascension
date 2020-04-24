@@ -286,6 +286,8 @@ MonoBehaviour:
   localScale: {x: 0, y: 0, z: 0}
   bar: {fileID: 0}
   barForeground: {fileID: 0}
+  GC: {fileID: 0}
+  pointsToGive: 0
 --- !u!114 &3679928681074000618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,5 +300,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d724992969b944dae74382e25caec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeTilDeath: 3
+  timeTilDeath: 1
   death: 0

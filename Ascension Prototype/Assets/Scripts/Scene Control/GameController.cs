@@ -8,7 +8,6 @@ public class GameController : MonoBehaviour
     private int points;
     private int multiplier;
     private static GameObject instance;
-    public GameObject player;
     public GameObject cam;
     private bool camSpawn;
 
@@ -32,6 +31,11 @@ public class GameController : MonoBehaviour
     {
         points += add;
         Debug.Log("Points: " + points);
+    }
+
+    public void ResetPoints()
+    {
+        points = 0;
     }
 
     public int GetPoints()

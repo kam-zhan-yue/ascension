@@ -10,6 +10,8 @@ TagManager:
   - MapGenerator
   - HealthUI
   - TextController
+  - PlayerUI
+  - BossUI
   layers:
   - Default
   - TransparentFX

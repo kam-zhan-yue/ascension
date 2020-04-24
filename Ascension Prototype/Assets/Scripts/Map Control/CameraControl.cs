@@ -34,7 +34,7 @@ public class CameraControl : MonoBehaviour
     //Map Generator Variables
     public MapGenerator MG;
 
-    private bool foundPlayer;
+    public bool foundPlayer;
 
     void Start()
     {

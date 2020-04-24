@@ -9,30 +9,32 @@ public class PlayerCombat : MonoBehaviour
     public Transform attackPoint;
     public float attackRange = 1f;
     public LayerMask enemyLayer;
+    public GameObject shield;
 
     public float lightAttackRate = 2f;
     public float heavyAttackRate = 1.2f;
     private float nextAttackTime = 0f;
     private float jumpAttackTimer = 0f;
-    private bool jumpAttack = false;
+    public bool jumpAttack = false;
+    public float blockingRate = 50f;
+    public float blockingTime = 0.3f;
+    public float blockingTimer = 0f;
+    public bool playerInvulnerable;
 
     int lightDamage = 30;
     int jumpDamage = 40;
     int heavyDamage = 70;
-    public bool playerAttacking;
-    
+
+    public PlayerController controller;
+
     void Start()
     {
         animator = GetComponent<Animator>();
+        shield.SetActive(false);
     }
     
     void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Debug.Log("Reset Scene");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+    { 
         if (jumpAttack)
         {
             jumpAttackTimer += Time.deltaTime;
@@ -43,17 +45,34 @@ public class PlayerCombat : MonoBehaviour
                 jumpAttackTimer = 0;
             }
         }
-
-        if(Time.time >= nextAttackTime && !this.GetComponent<PlayerController>().damaged)
+        if(playerInvulnerable)
         {
+            //Zero out velocity
+            controller.rb.velocity = Vector2.zero;
+            blockingTimer += Time.deltaTime;
+            if(blockingTimer >= blockingTime)
+            {
+                playerInvulnerable = false;
+                shield.SetActive(false);
+                blockingTimer = 0f;
+                nextAttackTime = Time.time + 1f /blockingRate;
+            }
+        }
+
+        if(Time.time >= nextAttackTime && !this.GetComponent<PlayerController>().damaged && !playerInvulnerable)
+        {
+            if(Input.GetKeyDown(KeyCode.L) && controller.grounded)
+            {
+                Block();
+            }
             if (Input.GetKeyDown(KeyCode.J))
             {
-                if(PlayerController.grounded)
+                if(controller.grounded)
                 {
                     Attack("lightAttack", 1f, lightDamage, 2f);
                     nextAttackTime = Time.time + 1f / lightAttackRate;
                 }
-                else if(!PlayerController.doubleJump)
+                else if(!controller.doubleJump)
                 {
                     Debug.Log("Jump Attack!");
                     jumpAttack = true;
@@ -63,12 +82,19 @@ public class PlayerCombat : MonoBehaviour
                 }
                 
             }
-            else if (Input.GetKeyDown(KeyCode.K) && PlayerController.grounded)
+            else if (Input.GetKeyDown(KeyCode.K) && controller.grounded)
             {
                 Attack("heavyAttack", 1.4f,heavyDamage,4f);
                 nextAttackTime = Time.time + 1f / heavyAttackRate;
             }
         }
+    }
+
+    void Block()
+    {
+        playerInvulnerable = true;
+        animator.SetTrigger("Block");
+        shield.SetActive(true);
     }
 
     void Attack(string anim, float attackRange, int damage, float knockback)
