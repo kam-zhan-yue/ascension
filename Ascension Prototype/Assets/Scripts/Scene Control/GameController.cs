@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public int level;
+    public string playerName;
     private int points;
     private int multiplier;
     private static GameObject instance;
@@ -14,18 +15,25 @@ public class GameController : MonoBehaviour
     public float time;
     public float bonus;
 
+    public bool addEntry;
+
     private void Awake()
     {
-        level = 1;
-        points = 0;
-        multiplier = 0;
         //Error prevention to prevent more than one instance of GameController
-        DontDestroyOnLoad(gameObject);
         if (instance == null)
             instance = gameObject;
         else
             Destroy(gameObject);
+        level = 1;
+        points = 0;
+        multiplier = 0;
+        if (string.IsNullOrEmpty(MainMenu.playerName))
+            playerName = "Player";
+        else
+            playerName = MainMenu.playerName;
+        DontDestroyOnLoad(gameObject);
     }
+    
 
     public void AddPoints(int add)
     {

@@ -19,6 +19,7 @@ public class PlayerUI : MonoBehaviour
     bool addEntry = false;
     public float gameOverTime = 2f;
     public TextMeshProUGUI finalPoints;
+    public TextMeshProUGUI nameText;
 
     private void Start()
     {
@@ -30,6 +31,7 @@ public class PlayerUI : MonoBehaviour
             GuideUI.SetActive(false);
             guideUp = false;
         }
+        addEntry = false;
     }
 
     void Update()
@@ -69,13 +71,15 @@ public class PlayerUI : MonoBehaviour
             }
             GameOverUI.SetActive(true);
             finalPoints.text = "Final Points: " + GC.GetPoints().ToString();
+            nameText.text = GC.playerName;
             GuideUI.SetActive(false);
             TextUI.SetActive(false);
             gameOverTime -= Time.deltaTime;
-            //Add an entry
+            //Add the highscore entry
             if(!addEntry)
             {
-                //Add the highscore entry
+                Debug.Log("Add Entry");
+                HighscoreTable.AddHighscoreEntry(GC.GetPoints(), GC.playerName);
                 addEntry = true;
             }
             if(gameOverTime<=0)
