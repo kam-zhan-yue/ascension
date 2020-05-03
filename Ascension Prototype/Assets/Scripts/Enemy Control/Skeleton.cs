@@ -8,6 +8,7 @@ public class Skeleton : Enemy
     void Start()
     {
         FindGameController();
+        type = "skeleton";
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         changeSpeed(maxSpeed);

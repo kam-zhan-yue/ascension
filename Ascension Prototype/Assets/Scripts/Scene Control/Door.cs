@@ -14,6 +14,9 @@ public class Door : MonoBehaviour
     public Boss bossScript;
     public bool bossLevel;
     public bool advanceLevel;
+    public int mainMenu = 0;
+    public int mapGenerator = 1;
+    public int boss = 2;
 
     private void Start()
     {
@@ -31,6 +34,7 @@ public class Door : MonoBehaviour
             Boss = GameObject.FindGameObjectWithTag("Boss");
             bossScript = Boss.GetComponent<Boss>();
         }
+        FindObjectOfType<AudioManager>().Play("DoorClosing");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -72,8 +76,9 @@ public class Door : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.E))
             {
+                FindObjectOfType<AudioManager>().Play("DoorOpening");
                 //If boss is still alive, do not progress
-                if(bossLevel)
+                if (bossLevel)
                 {
                     if (!bossScript.dead)
                         return;
@@ -93,7 +98,7 @@ public class Door : MonoBehaviour
                 //Every three levels, spawn a boss scene
                 if (GC.level%3==0)
                 {
-                    SceneManager.LoadScene(2);
+                    StartCoroutine(FindObjectOfType<LevelLoader>().LoadLevel(boss));
                     Debug.Log("Level is now:" + GC.level);
                     Debug.Log("Spawn a boss battle");
                 }
@@ -103,7 +108,7 @@ public class Door : MonoBehaviour
                     //After every 3 rounds, increase the muliplier by 1
                     if ((GC.level - 1) % 3 == 0)
                         GC.ChangeMultiplier((GC.level - 1) / 3);
-                    SceneManager.LoadScene(1);
+                    StartCoroutine(FindObjectOfType<LevelLoader>().LoadLevel(mapGenerator));
                     Debug.Log("Level is now:" + GC.level);
                     Debug.Log("Spawn a regular map");
                 }

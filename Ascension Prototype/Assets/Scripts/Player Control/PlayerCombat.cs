@@ -69,11 +69,13 @@ public class PlayerCombat : MonoBehaviour
             {
                 if(controller.grounded)
                 {
+                    FindObjectOfType<AudioManager>().Play("PlayerLight");
                     Attack("lightAttack", 1f, lightDamage, 2f);
                     nextAttackTime = Time.time + 1f / lightAttackRate;
                 }
                 else if(!controller.doubleJump)
                 {
+                    FindObjectOfType<AudioManager>().Play("PlayerLight");
                     Debug.Log("Jump Attack!");
                     jumpAttack = true;
                     animator.SetBool("jumpAttack", jumpAttack);
@@ -84,6 +86,7 @@ public class PlayerCombat : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.K) && controller.grounded)
             {
+                FindObjectOfType<AudioManager>().Play("PlayerHeavy");
                 Attack("heavyAttack", 1.4f,heavyDamage,4f);
                 nextAttackTime = Time.time + 1f / heavyAttackRate;
             }
@@ -109,6 +112,7 @@ public class PlayerCombat : MonoBehaviour
         //Damage enemies
         foreach (Collider2D enemy in hitEnemies)
         {
+            FindObjectOfType<HitStop>().Stop(0.05f);
             Debug.Log("We hit " + enemy.name);
             if (enemy.tag == "Skeleton")
                 enemy.GetComponent<Skeleton>().TakeDamage(damage, knockback);

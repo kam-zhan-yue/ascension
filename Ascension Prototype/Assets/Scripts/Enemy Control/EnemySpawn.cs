@@ -18,7 +18,11 @@ public class EnemySpawn : MonoBehaviour
         for(int i=0; i<GC.GetMultiplier()+3; i++)
         {
             if(FlyingEye && Spawn())
-                Instantiate(FE, new Vector3(this.transform.position.x, this.transform.position.y, -1), Quaternion.identity);
+            {
+                Vector2 spawnPos = new Vector2(this.transform.position.x, this.transform.position.y);
+                spawnPos += Random.insideUnitCircle.normalized;
+                Instantiate(FE, spawnPos, Quaternion.identity);
+            }
             if(Skeleton && Spawn())
                 Instantiate(SK, new Vector3(this.transform.position.x, this.transform.position.y, -1), Quaternion.identity);
         }

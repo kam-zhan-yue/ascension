@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &221096337051589179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 221096337051589177}
+  - component: {fileID: 221096337051589178}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &221096337051589177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221096337051589179}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.7872043, y: -1.399326, z: 0.64355385}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &221096337051589178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221096337051589179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5711d0dbe17c8408def3a842a3d2bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: BossCrash
+    clip: {fileID: 8300000, guid: a82c27e742438a243b2fb97c9dc32f66, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+  - name: BossAttack
+    clip: {fileID: 8300000, guid: ab34f4a5734bf1d409f5041043c17784, type: 3}
+    volume: 0.15
+    pitch: 0.7
+    source: {fileID: 0}
+  - name: ButtonPress
+    clip: {fileID: 8300000, guid: 4566e6cea3cdd5f45ad1994a2891f082, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+  - name: DoorClosing
+    clip: {fileID: 8300000, guid: 7a46b122b1103c14f9b137f342f1f2f7, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+  - name: DoorOpening
+    clip: {fileID: 8300000, guid: 8b17bc9b38f96ec45b7f27a0137fdeca, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+  - name: EnemyHit
+    clip: {fileID: 8300000, guid: e657af73af240df4b825dafc26a18065, type: 3}
+    volume: 0.1
+    pitch: 1
+    source: {fileID: 0}
+  - name: EyeAttack
+    clip: {fileID: 8300000, guid: e46b05d6f959bd64089f9aa225bb1ac7, type: 3}
+    volume: 0.15
+    pitch: 1
+    source: {fileID: 0}
+  - name: EyeDeath
+    clip: {fileID: 8300000, guid: b7c7e5718e4154a46a6083cceafa8a30, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+  - name: PlayerHeavy
+    clip: {fileID: 8300000, guid: 400b761223d05ef4b8eb65ecfbb155a5, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+  - name: PlayerLight
+    clip: {fileID: 8300000, guid: 96e848eed531b2a499e71a9031b5d89f, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+  - name: SkeletonAttack
+    clip: {fileID: 8300000, guid: 7ad620829059c554399f15d473503308, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+  - name: SkeletonDeath
+    clip: {fileID: 8300000, guid: a713ae9518c422746b94b2498efb6bc6, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+  - name: PlayerHit
+    clip: {fileID: 8300000, guid: e657af73af240df4b825dafc26a18065, type: 3}
+    volume: 0.15
+    pitch: 0.5
+    source: {fileID: 0}

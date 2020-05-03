@@ -9,6 +9,7 @@ public class FlyingEye : Enemy
     void Start()
     {
         FindGameController();
+        type = "eye";
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         changeHealth(maxHealth + GC.GetMultiplier() * 20);
@@ -103,6 +104,7 @@ public class FlyingEye : Enemy
         if (!playerDamaged && attackTimer >= 0.7f)
         {
             Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
+            FindObjectOfType<AudioManager>().Play("EyeAttack");
             if (hitPlayer != null)
             {
                 //Damage the player

@@ -154,6 +154,7 @@ public class CameraControl : MonoBehaviour
     //float duration:  Controls how long the shake occurs
     //float magnitude: Controls how powerful the shake is
     {
+        Debug.Log("Shake Screen");
         Vector3 originalPos = transform.localPosition;
         float elapsed = 0f;
         

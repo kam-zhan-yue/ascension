@@ -151,10 +151,28 @@ public class HighscoreTable : MonoBehaviour
         string rankString;
         switch (rank)
         {
-            case 1: rankString = "1ST"; break;
-            case 2: rankString = "2ND"; break;
-            case 3: rankString = "3RD"; break;
-            default: rankString = rank + "TH"; break;
+            case 1:
+                rankString = "1ST";
+                entryTransform.Find("posText").GetComponent<TextMeshProUGUI>().color = new Color32(255, 215, 0, 255);
+                entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().color = new Color32(255, 215, 0, 255);
+                entryTransform.Find("scoreText").GetComponent<TextMeshProUGUI>().color = new Color32(255, 215, 0, 255);
+                Debug.Log("Make " + entry.name + " gold");
+                break;
+            case 2:
+                rankString = "2ND";
+                entryTransform.Find("posText").GetComponent<TextMeshProUGUI>().color = new Color32(193, 193, 193, 255);
+                entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().color = new Color32(193, 193, 193, 255);
+                entryTransform.Find("scoreText").GetComponent<TextMeshProUGUI>().color = new Color32(193, 193, 193, 255);
+                break;
+            case 3:
+                rankString = "3RD";
+                entryTransform.Find("posText").GetComponent<TextMeshProUGUI>().color = new Color32(205, 127, 50,255);
+                entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().color = new Color32(205, 127, 50, 255);
+                entryTransform.Find("scoreText").GetComponent<TextMeshProUGUI>().color = new Color32(205, 127, 50, 255);
+                break;
+            default:
+                rankString = rank + "TH";
+                break;
         }
         int score = entry.score;
         string name = entry.name;

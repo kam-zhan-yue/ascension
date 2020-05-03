@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    public string type;
     public Animator animator;
     public Rigidbody2D rb;
     public bool dead;
     public DestroyMe destroyScript;
+    public ParticleSystem attackPS;
 
     public enum State
     {
@@ -119,6 +121,10 @@ public class Enemy : MonoBehaviour
         if (!playerDamaged && attackTimer >= damageFrame && attackTimer <= damageFrame + 0.2f)
         {
             Debug.Log("Player is in Range");
+            if (type == "skeleton")
+                FindObjectOfType<AudioManager>().Play("SkeletonAttack");
+            if (type == "boss")
+                FindObjectOfType<AudioManager>().Play("BossAttack");
             Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
             if(hitPlayer != null)
             {
@@ -278,6 +284,11 @@ public class Enemy : MonoBehaviour
     {
         if (invulnerable)
             return;
+        StartCoroutine(FindObjectOfType<CameraControl>().Shake(.05f, .05f));
+        FindObjectOfType<AudioManager>().Play("EnemyHit");
+        //Error Prevention
+        if(attackPS != null)
+            AttackParticles();
         animator.SetBool("Walking", false);
         //Take damage
         currentHealth -= damage;
@@ -293,7 +304,6 @@ public class Enemy : MonoBehaviour
             }
             else
                 rb.velocity += new Vector2(-2, rb.velocity.y);
-
         }
         else
         {
@@ -316,10 +326,22 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("Hurt");
     }
 
+    public void AttackParticles()
+    {
+        attackPS.Play();
+        Debug.Log("Attack particles");
+    }
+
     public void Die()
     {
         currentHealth = 0;
         HealthController();
+        if(type == "skeleton")
+            FindObjectOfType<AudioManager>().Play("SkeletonDeath");
+        if(type == "eye")
+            FindObjectOfType<AudioManager>().Play("EyeDeath");
+        if(type == "boss")
+            FindObjectOfType<AudioManager>().Play("BossDeath");
         Debug.Log("Enemy died");
         animator.SetTrigger("Dead");
         animator.SetBool("Walking", false);

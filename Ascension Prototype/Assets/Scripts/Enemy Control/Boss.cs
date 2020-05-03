@@ -57,7 +57,8 @@ public class Boss : Enemy
             changeHealth(1000);
             setHealth();
         }
-        
+
+        type = "boss";
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         maxSpeed = runningSpeed;
@@ -182,6 +183,7 @@ public class Boss : Enemy
             if (wallInfo && chargingTime>1.5)
             {
                 Debug.Log("Boss hit a wall and is now vulnerable");
+                FindObjectOfType<AudioManager>().Play("BossCrash");
                 charging = false;
                 makeVulnerable = true;
                 chargingTime = 0;
@@ -201,6 +203,7 @@ public class Boss : Enemy
             if (wallInfo && chargingTime > 1.5)
             {
                 Debug.Log("Boss hit a wall and is now vulnerable");
+                FindObjectOfType<AudioManager>().Play("BossCrash");
                 charging = false;
                 makeVulnerable = true;
                 chargingTime = 0;

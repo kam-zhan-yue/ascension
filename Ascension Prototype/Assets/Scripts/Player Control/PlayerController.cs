@@ -220,6 +220,8 @@ public class PlayerController : MonoBehaviour
             return;
         if (health>0 && !damaged)
         {
+            StartCoroutine(FindObjectOfType<CameraControl>().Shake(.05f, .1f));
+            FindObjectOfType<AudioManager>().Play("PlayerHit");
             healthUI.Hurt(health);
             if(damage==2)
                 healthUI.Hurt(health-1);
@@ -242,6 +244,7 @@ public class PlayerController : MonoBehaviour
                 //Apply a force to the left
                 rb.velocity += new Vector2(-knockback, rb.velocity.y);
             }
+            FindObjectOfType<HitStop>().Stop(0.1f);
             //If health goes below zero, die 
             if (health <= 0)
             {
@@ -260,6 +263,8 @@ public class PlayerController : MonoBehaviour
         //If blocking, then don't damage
         if (combat.playerInvulnerable)
             return;
+        StartCoroutine(FindObjectOfType<CameraControl>().Shake(.05f, .15f));
+        FindObjectOfType<AudioManager>().Play("PlayerHit");
         rb.velocity = Vector2.zero;
         rb.velocity += new Vector2(0, knockback);
         healthUI.Hurt(health);
@@ -275,6 +280,7 @@ public class PlayerController : MonoBehaviour
             this.enabled = false;
         }
     }
+    
 
     private void OnDrawGizmos()
     {
