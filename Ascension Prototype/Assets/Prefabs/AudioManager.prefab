@@ -49,63 +49,94 @@ MonoBehaviour:
     volume: 0.2
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: BossAttack
     clip: {fileID: 8300000, guid: ab34f4a5734bf1d409f5041043c17784, type: 3}
     volume: 0.15
     pitch: 0.7
     source: {fileID: 0}
+    loop: 0
   - name: ButtonPress
     clip: {fileID: 8300000, guid: 4566e6cea3cdd5f45ad1994a2891f082, type: 3}
     volume: 0.2
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: DoorClosing
     clip: {fileID: 8300000, guid: 7a46b122b1103c14f9b137f342f1f2f7, type: 3}
     volume: 0.2
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: DoorOpening
     clip: {fileID: 8300000, guid: 8b17bc9b38f96ec45b7f27a0137fdeca, type: 3}
     volume: 0.2
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: EnemyHit
     clip: {fileID: 8300000, guid: e657af73af240df4b825dafc26a18065, type: 3}
     volume: 0.1
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: EyeAttack
     clip: {fileID: 8300000, guid: e46b05d6f959bd64089f9aa225bb1ac7, type: 3}
     volume: 0.15
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: EyeDeath
     clip: {fileID: 8300000, guid: b7c7e5718e4154a46a6083cceafa8a30, type: 3}
     volume: 0.2
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: PlayerHeavy
     clip: {fileID: 8300000, guid: 400b761223d05ef4b8eb65ecfbb155a5, type: 3}
     volume: 0.2
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: PlayerLight
     clip: {fileID: 8300000, guid: 96e848eed531b2a499e71a9031b5d89f, type: 3}
     volume: 0.2
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: SkeletonAttack
     clip: {fileID: 8300000, guid: 7ad620829059c554399f15d473503308, type: 3}
     volume: 0.2
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: SkeletonDeath
     clip: {fileID: 8300000, guid: a713ae9518c422746b94b2498efb6bc6, type: 3}
     volume: 0.2
     pitch: 1
     source: {fileID: 0}
+    loop: 0
   - name: PlayerHit
     clip: {fileID: 8300000, guid: e657af73af240df4b825dafc26a18065, type: 3}
     volume: 0.15
     pitch: 0.5
     source: {fileID: 0}
+    loop: 0
+  - name: MainMenu
+    clip: {fileID: 8300000, guid: 29b089bd2f4cbdd4382839a7b01f1e95, type: 3}
+    volume: 0.1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: RegularLevel
+    clip: {fileID: 8300000, guid: f8a07003ef117154cbc570598b4f5e85, type: 3}
+    volume: 0.1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: Boss
+    clip: {fileID: 8300000, guid: a69c1f6c0cb8e2741b2e19d2b52f050d, type: 3}
+    volume: 0.1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1

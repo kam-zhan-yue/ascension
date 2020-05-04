@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -31,6 +32,16 @@ public class GameController : MonoBehaviour
             playerName = "Player";
         else
             playerName = MainMenu.playerName;
+
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        //FindObjectOfType<AudioManager>().Stop("MainMenu");
+        if (scene == 1)
+        {
+            FindObjectOfType<AudioManager>().Play("RegularLevel");
+            Debug.Log("test");
+        }
+        if (scene == 2)
+            FindObjectOfType<AudioManager>().Play("Boss");
         DontDestroyOnLoad(gameObject);
     }
     

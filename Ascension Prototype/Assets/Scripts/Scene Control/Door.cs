@@ -101,6 +101,8 @@ public class Door : MonoBehaviour
                     StartCoroutine(FindObjectOfType<LevelLoader>().LoadLevel(boss));
                     Debug.Log("Level is now:" + GC.level);
                     Debug.Log("Spawn a boss battle");
+                    FindObjectOfType<AudioManager>().Stop("RegularLevel");
+                    FindObjectOfType<AudioManager>().Play("Boss");
                 }
                 //Else, reset scene
                 else
@@ -109,6 +111,8 @@ public class Door : MonoBehaviour
                     if ((GC.level - 1) % 3 == 0)
                         GC.ChangeMultiplier((GC.level - 1) / 3);
                     StartCoroutine(FindObjectOfType<LevelLoader>().LoadLevel(mapGenerator));
+                    FindObjectOfType<AudioManager>().Stop("Boss");
+                    FindObjectOfType<AudioManager>().Play("RegularLevel");
                     Debug.Log("Level is now:" + GC.level);
                     Debug.Log("Spawn a regular map");
                 }
