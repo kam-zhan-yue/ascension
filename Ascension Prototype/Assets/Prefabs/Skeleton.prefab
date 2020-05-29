@@ -200,6 +200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fad1d840952e6a4daefca144b04c76c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popUp: {fileID: 0}
+  type: 
   animator: {fileID: 6314956378216279242}
   rb: {fileID: 0}
   dead: 0
@@ -251,6 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21f4120c6e39fa46a0623cb4c025d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popUp: {fileID: 4390452003782473449, guid: 520b1cf2b6bb10348913aee441308fa6, type: 3}
+  type: 
   animator: {fileID: 6314956378216279242}
   rb: {fileID: 0}
   dead: 0
@@ -282,7 +286,7 @@ MonoBehaviour:
     m_Bits: 2048
   selfDamaged: 0
   damageTimer: 0
-  damageTime: 0.7
+  damageTime: 0.8
   stop: 0
   invulnerable: 0
   localScale: {x: 0, y: 0, z: 0}

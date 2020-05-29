@@ -55,7 +55,7 @@ public class FlyingEye : Enemy
             switch (state)
             {
                 case State.Patrolling:
-                    Patrol();
+                    Idle();
                     break;
                 case State.Chasing:
                     Chase();
@@ -87,7 +87,7 @@ public class FlyingEye : Enemy
             stop = true;
     }
 
-    private void Patrol()
+    private void Idle()
     {
         animator.SetBool("Attacking", false);
         //Debug.Log("Player is not in aggro range");
@@ -142,7 +142,9 @@ public class FlyingEye : Enemy
             facingRight = false;
         }
         //gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * getSpeed() * Time.deltaTime);
-        Vector2 velocity = new Vector2((transform.position.x - player.transform.position.x) * getSpeed(), (transform.position.y - player.transform.position.y) * getSpeed());
-        rb.velocity = -velocity;
+        Vector3 direction = player.transform.position - transform.position;
+        direction.Normalize();
+        rb.velocity = getSpeed() * direction * 4;
+        //Vector2 velocity = new Vector2((transform.position.x - player.transform.position.x) * getSpeed(), (transform.position.y - player.transform.position.y) * getSpeed());
     }
 }

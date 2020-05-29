@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
     HealthUI healthUI;
     PlayerUI playerUI;
     public PlayerCombat combat;
+    public float newJumpForce;
+    public float newSpeed;
 
     void Start()
     {
@@ -85,7 +87,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(damaged)
+        //Power Ups
+        newJumpForce = jumpForce * FindObjectOfType<GameController>().jumpMultiplier;
+        newSpeed = speed * FindObjectOfType<GameController>().movementMultiplier;
+        if (damaged)
         {
             animator.SetBool("Hurt", true);
             Animate(false, false, false, 0, false);
@@ -110,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
     void MoveCharacter(float moveInput)
     {
-        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+        rb.velocity = new Vector2(moveInput * newSpeed, rb.velocity.y);
     }
 
     void CheckSurroundings()
@@ -128,6 +133,7 @@ public class PlayerController : MonoBehaviour
         {
             isWallSliding = true;
             extraJumps = extraJumpValue;
+            doubleJump = false;
             if(rb.velocity.y < -wallSlideSpeed)
             {
                 rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
@@ -175,7 +181,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Double Jump");
             extraJumps--;
             jumpTimeCounter = jumpTime;
-            rb.velocity = Vector2.up * jumpForce;
+            rb.velocity = Vector2.up * newJumpForce;
             isJumping = true;
             doubleJump = true;
             isFalling = false;
@@ -185,7 +191,7 @@ public class PlayerController : MonoBehaviour
         {
             if (jumpTimeCounter > 0)
             {
-                rb.velocity = Vector2.up * jumpForce;
+                rb.velocity = Vector2.up * newJumpForce;
                 jumpTimeCounter -= Time.deltaTime;
                 if(jumpTimeCounter<0.165)
                     stopGroundCheck = false;
@@ -249,6 +255,11 @@ public class PlayerController : MonoBehaviour
             if (health <= 0)
             {
                 Debug.Log("Player has died");
+                FindObjectOfType<AudioManager>().Play("GameOver");
+                FindObjectOfType<AudioManager>().Play("PlayerDeath");
+                FindObjectOfType<AudioManager>().Stop("Boss");
+                FindObjectOfType<AudioManager>().Stop("RegularLevel");
+                FindObjectOfType<AudioManager>().Stop("Victory");
                 rb.velocity = Vector2.zero;
                 animator.SetBool("Dead", true);
                 playerUI.gameOver = true;

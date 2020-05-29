@@ -7,13 +7,15 @@ public class PlayerCombat : MonoBehaviour
 {
     Animator animator;
     public Transform attackPoint;
-    public float attackRange = 1f;
+    public float lightAttackRange = 1f;
+    public float heavyAttackRange = 1.4f;
     public LayerMask enemyLayer;
     public GameObject shield;
 
     public float lightAttackRate = 2f;
     public float heavyAttackRate = 1.2f;
     private float nextAttackTime = 0f;
+    private float nextBlockingTime = 0f;
     private float jumpAttackTimer = 0f;
     public bool jumpAttack = false;
     public float blockingRate = 50f;
@@ -21,10 +23,13 @@ public class PlayerCombat : MonoBehaviour
     public float blockingTimer = 0f;
     public bool playerInvulnerable;
 
-    int lightDamage = 30;
-    int jumpDamage = 40;
-    int heavyDamage = 70;
+    public int lightDamage = 30;
+    public int jumpDamage = 40;
+    public int heavyDamage = 70;
 
+    public int newLightDamage;
+    public int newHeavyDamage;
+    public int newJumpDamage;
     public PlayerController controller;
 
     void Start()
@@ -34,7 +39,10 @@ public class PlayerCombat : MonoBehaviour
     }
     
     void Update()
-    { 
+    {
+        newLightDamage = (int)(lightDamage * FindObjectOfType<GameController>().damageMultiplier);
+        newHeavyDamage = (int)(heavyDamage * FindObjectOfType<GameController>().damageMultiplier);
+        newJumpDamage = (int)(jumpDamage * FindObjectOfType<GameController>().damageMultiplier);
         if (jumpAttack)
         {
             jumpAttackTimer += Time.deltaTime;
@@ -56,30 +64,36 @@ public class PlayerCombat : MonoBehaviour
                 shield.SetActive(false);
                 blockingTimer = 0f;
                 nextAttackTime = Time.time + 1f /blockingRate;
+                nextBlockingTime = Time.time + 1f / blockingRate*8;
             }
         }
 
-        if(Time.time >= nextAttackTime && !this.GetComponent<PlayerController>().damaged && !playerInvulnerable)
+        if(Time.time >= nextBlockingTime && !this.GetComponent<PlayerController>().damaged && !playerInvulnerable)
         {
-            if(Input.GetKeyDown(KeyCode.L) && controller.grounded)
+            if (Input.GetKeyDown(KeyCode.L) && controller.grounded)
             {
+                FindObjectOfType<AudioManager>().Play("ForceField");
                 Block();
             }
+        }
+
+        if (Time.time >= nextAttackTime && !this.GetComponent<PlayerController>().damaged && !playerInvulnerable)
+        {
             if (Input.GetKeyDown(KeyCode.J))
             {
                 if(controller.grounded)
                 {
                     FindObjectOfType<AudioManager>().Play("PlayerLight");
-                    Attack("lightAttack", 1f, lightDamage, 2f);
+                    Attack("lightAttack", lightAttackRange, newLightDamage, 2f);
                     nextAttackTime = Time.time + 1f / lightAttackRate;
                 }
-                else if(!controller.doubleJump)
+                else if(!controller.doubleJump && !controller.isTouchingWall)
                 {
                     FindObjectOfType<AudioManager>().Play("PlayerLight");
                     Debug.Log("Jump Attack!");
                     jumpAttack = true;
                     animator.SetBool("jumpAttack", jumpAttack);
-                    Attack("jumpAttack", 1f, jumpDamage,2f);
+                    Attack("jumpAttack", lightAttackRange, newJumpDamage,2f);
                     nextAttackTime = Time.time + 1f / lightAttackRate;
                 }
                 
@@ -87,7 +101,7 @@ public class PlayerCombat : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.K) && controller.grounded)
             {
                 FindObjectOfType<AudioManager>().Play("PlayerHeavy");
-                Attack("heavyAttack", 1.4f,heavyDamage,4f);
+                Attack("heavyAttack", heavyAttackRange,newHeavyDamage,4f);
                 nextAttackTime = Time.time + 1f / heavyAttackRate;
             }
         }
@@ -127,6 +141,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (attackPoint == null)
             return;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(attackPoint.position, lightAttackRange);
+        Gizmos.DrawWireSphere(attackPoint.position, heavyAttackRange);
     }
 }

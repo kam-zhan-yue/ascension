@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    public Transform popUp;
     public string type;
     public Animator animator;
     public Rigidbody2D rb;
@@ -160,7 +161,7 @@ public class Enemy : MonoBehaviour
         if (distToPlayer < attackRange)
             state = State.Attacking;
         //Chase player if within range, but not attacking range
-        else if (distToPlayer < aggroRange)
+        else if (distToPlayer < aggroRange && VerticalDistToPlayer() < 0.8f)
             state = State.Chasing;
         //Patrol around if no player is within range
         else if (distToPlayer < 15f)
@@ -284,6 +285,10 @@ public class Enemy : MonoBehaviour
     {
         if (invulnerable)
             return;
+        Vector3 pos = transform.position;
+        pos += new Vector3(0, 0.2f);
+        popUp.GetComponent<TextPopUp>().DamagePopUp(damage);
+        Instantiate(popUp, pos, Quaternion.identity);
         StartCoroutine(FindObjectOfType<CameraControl>().Shake(.05f, .05f));
         FindObjectOfType<AudioManager>().Play("EnemyHit");
         //Error Prevention
@@ -336,12 +341,20 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = 0;
         HealthController();
+        Vector3 pos = transform.position;
+        pos += new Vector3(0, 0.7f);
+        popUp.GetComponent<TextPopUp>().PointsPopUp(pointsToGive);
+        Instantiate(popUp, pos, Quaternion.identity);
         if(type == "skeleton")
             FindObjectOfType<AudioManager>().Play("SkeletonDeath");
         if(type == "eye")
             FindObjectOfType<AudioManager>().Play("EyeDeath");
         if(type == "boss")
+        {
             FindObjectOfType<AudioManager>().Play("BossDeath");
+            FindObjectOfType<AudioManager>().Stop("Boss");
+            FindObjectOfType<AudioManager>().Play("Victory");
+        }
         Debug.Log("Enemy died");
         animator.SetTrigger("Dead");
         animator.SetBool("Walking", false);

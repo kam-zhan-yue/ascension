@@ -142,5 +142,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d6374583addfe4abc6450aa03f2207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popUp: {fileID: 4390452003782473449, guid: 520b1cf2b6bb10348913aee441308fa6, type: 3}
   GameController: {fileID: 0}
   GC: {fileID: 0}
+  TextController: {fileID: 0}
+  TC: {fileID: 0}
+  Boss: {fileID: 0}
+  bossScript: {fileID: 0}
+  bossLevel: 0
+  advanceLevel: 0
+  mainMenu: 0
+  mapGenerator: 1
+  boss: 2

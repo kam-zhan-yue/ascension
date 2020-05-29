@@ -2449,11 +2449,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8113598547082373569}
     m_Modifications:
-    - target: {fileID: 2593437731680657059, guid: 052960d49ac29d644b77cafc4e2720f3,
-        type: 3}
-      propertyPath: m_Name
-      value: GroundSpawn (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 5485605613279622890, guid: 052960d49ac29d644b77cafc4e2720f3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2509,6 +2504,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2593437731680657059, guid: 052960d49ac29d644b77cafc4e2720f3,
+        type: 3}
+      propertyPath: m_Name
+      value: GroundSpawn (1)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 052960d49ac29d644b77cafc4e2720f3, type: 3}
 --- !u!4 &6344682061411171500 stripped
@@ -2524,11 +2524,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8113598547082373569}
     m_Modifications:
-    - target: {fileID: 5853232763287198541, guid: b1a4b8ce192519d458656cf5d429f3e9,
-        type: 3}
-      propertyPath: m_Name
-      value: FlyingSpawn
-      objectReference: {fileID: 0}
     - target: {fileID: 423367877074778570, guid: b1a4b8ce192519d458656cf5d429f3e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2584,6 +2579,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5853232763287198541, guid: b1a4b8ce192519d458656cf5d429f3e9,
+        type: 3}
+      propertyPath: m_Name
+      value: FlyingSpawn
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1a4b8ce192519d458656cf5d429f3e9, type: 3}
 --- !u!4 &6528528408214949268 stripped
@@ -2599,11 +2599,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8113598547082373569}
     m_Modifications:
-    - target: {fileID: 2593437731680657059, guid: 052960d49ac29d644b77cafc4e2720f3,
-        type: 3}
-      propertyPath: m_Name
-      value: GroundSpawn
-      objectReference: {fileID: 0}
     - target: {fileID: 5485605613279622890, guid: 052960d49ac29d644b77cafc4e2720f3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2658,6 +2653,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2593437731680657059, guid: 052960d49ac29d644b77cafc4e2720f3,
+        type: 3}
+      propertyPath: m_Name
+      value: GroundSpawn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 052960d49ac29d644b77cafc4e2720f3, type: 3}

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
+    public Transform popUp;
     Animator anim;
     public GameObject GameController;
     public GameController GC;
@@ -33,6 +34,14 @@ public class Door : MonoBehaviour
             bossLevel = true;
             Boss = GameObject.FindGameObjectWithTag("Boss");
             bossScript = Boss.GetComponent<Boss>();
+        }
+        if(GC.level ==1)
+        {
+            FindObjectOfType<TextController>().StartLevel();
+        }
+        if ((GC.level - 1) % 3 == 0 && GC.level != 1)
+        {
+            FindObjectOfType<TextController>().UpdateLevel();
         }
         FindObjectOfType<AudioManager>().Play("DoorClosing");
     }
@@ -92,17 +101,21 @@ public class Door : MonoBehaviour
                 //Increment level by 1 and add points
                 GC.level++;
                 GC.AddPoints(200 + GC.GetMultiplier() * 100);
+                PointsUp(200 + GC.GetMultiplier() * 100);
+
                 //Add bonus if bonus achieved
                 if (GC.time < GC.bonus)
+                {
                     GC.AddPoints(100 + GC.GetMultiplier() * 50);
+                    PointsUp(100 + GC.GetMultiplier() * 50);
+                    FindObjectOfType<AudioManager>().Play("Bonus");
+                }
                 //Every three levels, spawn a boss scene
                 if (GC.level%3==0)
                 {
                     StartCoroutine(FindObjectOfType<LevelLoader>().LoadLevel(boss));
                     Debug.Log("Level is now:" + GC.level);
                     Debug.Log("Spawn a boss battle");
-                    FindObjectOfType<AudioManager>().Stop("RegularLevel");
-                    FindObjectOfType<AudioManager>().Play("Boss");
                 }
                 //Else, reset scene
                 else
@@ -111,13 +124,18 @@ public class Door : MonoBehaviour
                     if ((GC.level - 1) % 3 == 0)
                         GC.ChangeMultiplier((GC.level - 1) / 3);
                     StartCoroutine(FindObjectOfType<LevelLoader>().LoadLevel(mapGenerator));
-                    FindObjectOfType<AudioManager>().Stop("Boss");
-                    FindObjectOfType<AudioManager>().Play("RegularLevel");
                     Debug.Log("Level is now:" + GC.level);
                     Debug.Log("Spawn a regular map");
                 }
             }
         }
+    }
+
+    void PointsUp(int points)
+    {
+        Vector3 pos = transform.position;
+        pos += new Vector3(0, 0.5f);
+        popUp.GetComponent<TextPopUp>().PointsPopUp(points);
     }
 
     private void OnTriggerExit2D (Collider2D collision)

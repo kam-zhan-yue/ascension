@@ -10,6 +10,7 @@ public class TextController : MonoBehaviour
     public TextMeshProUGUI timeElapsed;
     public TextMeshProUGUI timeBonus;
     public TextMeshProUGUI doorText;
+    public TextMeshProUGUI textNotification;
     public bool activateDoor;
     public bool bossText;
 
@@ -37,6 +38,44 @@ public class TextController : MonoBehaviour
             UpdateTimer();
             UpdateDoor();
         }
+    }
+
+    public void UpdateLevel()
+    {
+        StartCoroutine(TextUpdate(textNotification, "The enemies seem stronger...",3f));
+    }
+
+    public void StartLevel()
+    {
+        StartCoroutine(TextUpdate(textNotification, "Ascend to the top and defeat enemies to gain points.", 4f));
+    }
+
+    public void UpdatePowerUps(int powerup)
+    {
+        switch(powerup)
+        {
+            case 1:
+                StartCoroutine(TextUpdate(textNotification, "Your damage has increased", 3f));
+            break;
+            case 2:
+                StartCoroutine(TextUpdate(textNotification, "Your speed has increased", 3f));
+                break;
+            case 3:
+                StartCoroutine(TextUpdate(textNotification, "Your jump force has increased", 3f));
+                break;
+            case 4:
+                StartCoroutine(TextUpdate(textNotification, "You cannot power up anymore", 3f));
+                break;
+        }
+    }
+
+    public IEnumerator TextUpdate(TextMeshProUGUI textField, string quote, float duration)
+    {
+        textField.text = quote;
+        Debug.Log("Changed text");
+        yield return new WaitForSecondsRealtime(duration);
+        textField.text = "";
+        Debug.Log("Erased text");
     }
 
     public void UpdateBoss(int health)

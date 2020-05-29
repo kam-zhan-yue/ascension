@@ -129,7 +129,7 @@ Transform:
   m_Children:
   - {fileID: 3679928680096927224}
   - {fileID: 3679928680358609092}
-  - {fileID: 740185734276651411}
+  - {fileID: 2785860511177604635}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -251,11 +251,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d28fb22f2929124f8d0e562e17377b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popUp: {fileID: 4390452003782473449, guid: 520b1cf2b6bb10348913aee441308fa6, type: 3}
+  type: 
   animator: {fileID: 0}
   rb: {fileID: 0}
   dead: 0
   destroyScript: {fileID: 3679928681074000618}
-  attackPS: {fileID: 1032471869485836842}
+  attackPS: {fileID: 0}
   state: 0
   groundDetection: {fileID: 3679928681074000622}
   groundCheckDistance: 0
@@ -304,7 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeTilDeath: 1
   death: 0
---- !u!1001 &3130885237637435262
+--- !u!1001 &549392794800400630
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -319,7 +321,7 @@ PrefabInstance:
     - target: {fileID: 2393250378192508653, guid: 57a8e009174778047bc60bfb14b84034,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.147
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2393250378192508653, guid: 57a8e009174778047bc60bfb14b84034,
         type: 3}
@@ -371,32 +373,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7911144529269532642, guid: 57a8e009174778047bc60bfb14b84034,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: -732754031
-      objectReference: {fileID: 0}
-    - target: {fileID: 7911144529269532642, guid: 57a8e009174778047bc60bfb14b84034,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7911144529269532642, guid: 57a8e009174778047bc60bfb14b84034,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 999
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57a8e009174778047bc60bfb14b84034, type: 3}
---- !u!4 &740185734276651411 stripped
+--- !u!4 &2785860511177604635 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2393250378192508653, guid: 57a8e009174778047bc60bfb14b84034,
     type: 3}
-  m_PrefabInstance: {fileID: 3130885237637435262}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1032471869485836842 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2677161524743480660, guid: 57a8e009174778047bc60bfb14b84034,
-    type: 3}
-  m_PrefabInstance: {fileID: 3130885237637435262}
+  m_PrefabInstance: {fileID: 549392794800400630}
   m_PrefabAsset: {fileID: 0}

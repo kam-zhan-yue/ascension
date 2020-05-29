@@ -67,6 +67,7 @@ public class Boss : Enemy
         player = GameObject.FindGameObjectWithTag("Player");
         bossState = BossState.Chase;
         pointsToGive = 100 + GC.GetMultiplier() * 50;
+        chargingSpeed = chargingSpeed * (1+0.2f*GC.GetMultiplier());
         TextController = GameObject.FindGameObjectWithTag("TextController");
         TC = TextController.GetComponent<TextController>();
         shield.SetActive(false);
@@ -147,12 +148,12 @@ public class Boss : Enemy
     public void Charge(bool wallInfo)
     {
         lastPhase = true;
-        shield.SetActive(true);
         animator.SetBool("lightAttack", false);
         animator.SetBool("heavyAttack", false);
         chargingTime += Time.deltaTime;
         if (chargingTime < 1)
             return;
+        shield.SetActive(true);
         //If not charging and player is to the right
         if (!charging && transform.position.x < player.transform.position.x)
         {
@@ -224,7 +225,10 @@ public class Boss : Enemy
         if(!lastPhase)
             Attack("lightAttack", lightDamageTime, lightAttackTime, lightAttackPoint,1,0.5f);
         else
+        {
             Attack("heavyAttack", heavyDamageTime, heavyAttackTime, heavyAttackPoint,2,1f);
+            shield.SetActive(false);
+        }
     }
 
     public new void CheckDistToPlayer()

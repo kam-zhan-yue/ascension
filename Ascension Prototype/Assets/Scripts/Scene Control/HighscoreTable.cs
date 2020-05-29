@@ -64,21 +64,16 @@ public class HighscoreTable : MonoBehaviour
     }
 
     //===============PROCEDURE===============//
-    private void CreateNewHighscores()
+    public void CreateNewHighscores()
     //Purpose:          Creates a new HighscoresJSON file and some placeholder highscores
     {
         highscoreEntryList = new List<HighscoreEntry>()
         {
-            new HighscoreEntry{ name = "Aaron", score = 5 },
-            new HighscoreEntry{ name = "Phillip", score = 10},
-            new HighscoreEntry{ name = "Molly", score = 4 },
-            new HighscoreEntry{ name = "Ben", score = 6 },
-            new HighscoreEntry{ name = "Kenny", score = 2 },
-            new HighscoreEntry{ name = "Aaron", score = 5 },
-            new HighscoreEntry{ name = "Phillip", score = 10},
-            new HighscoreEntry{ name = "Molly", score = 4 },
-            new HighscoreEntry{ name = "Ben", score = 6 },
-            new HighscoreEntry{ name = "Kenny", score = 2 },
+            //new HighscoreEntry{ name = "Aaron", score = 5 },
+            //new HighscoreEntry{ name = "Phillip", score = 10},
+            //new HighscoreEntry{ name = "Molly", score = 4 },
+            //new HighscoreEntry{ name = "Ben", score = 6 },
+            //new HighscoreEntry{ name = "Kenny", score = 2 },
         };
 
         HighscoresJSON highscores = new HighscoresJSON { highscoreEntryList = highscoreEntryList };

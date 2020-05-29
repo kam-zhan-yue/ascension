@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
     public GameObject PauseUI;
     public GameObject GuideUI;
+    public GameObject BossUI;
+    public GameObject PowerUI;
     public GameObject GameOverUI;
     public GameObject TextUI;
     public GameObject GameController;
     public GameController GC;
+    public AudioMixer mixer;
+    public Slider slider;
 
     public static bool paused = false;
     public static bool guideUp = true;
+    bool bossUp = false;
     public bool gameOver = false;
     bool addEntry = false;
     public float gameOverTime = 2f;
@@ -24,7 +31,9 @@ public class PlayerUI : MonoBehaviour
     private void Start()
     {
         GameController = GameObject.FindGameObjectWithTag("GameController");
+        BossUI = GameObject.FindGameObjectWithTag("BossUI");
         GC = GameController.GetComponent<GameController>();
+        slider.value = PlayerPrefs.GetFloat("Volume");
         if(GC.level>1)
         {
             Debug.Log("Test");
@@ -44,7 +53,10 @@ public class PlayerUI : MonoBehaviour
             }
             else
             {
-                Resume();
+                PauseUI.SetActive(false);
+                Time.timeScale = 1f;
+                paused = false;
+                Debug.Log("Resuming the game...");
             }
         }
 
@@ -64,22 +76,21 @@ public class PlayerUI : MonoBehaviour
         
         if(gameOver)
         {
-            if(GC.level %3==0)
-            {
-                GameObject BossUI = GameObject.FindGameObjectWithTag("BossUI");
+            if(BossUI != null)
                 BossUI.SetActive(false);
-            }
             GameOverUI.SetActive(true);
             finalPoints.text = "Final Points: " + GC.GetPoints().ToString();
-            nameText.text = GC.playerName;
+            nameText.text = PlayerPrefs.GetString("Name");
             GuideUI.SetActive(false);
             TextUI.SetActive(false);
+            PowerUI.SetActive(false);
             gameOverTime -= Time.deltaTime;
             //Add the highscore entry
             if(!addEntry)
             {
                 Debug.Log("Add Entry");
-                HighscoreTable.AddHighscoreEntry(GC.GetPoints(), GC.playerName);
+                Debug.Log(PlayerPrefs.GetString("Name"));
+                HighscoreTable.AddHighscoreEntry(GC.GetPoints(), PlayerPrefs.GetString("Name"));
                 addEntry = true;
             }
             if(gameOverTime<=0)
@@ -90,13 +101,24 @@ public class PlayerUI : MonoBehaviour
         }
     }
 
+    public void SetVolume()
+    {
+        float volume = slider.value;
+        mixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("Volume", volume);
+    }
+
     public void Restart()
     {
+        FindObjectOfType<AudioManager>().Stop("GameOver");
+        FindObjectOfType<AudioManager>().Play("RegularLevel");
+        FindObjectOfType<AudioManager>().Play("ButtonPress");
         gameOverTime = 2f;
         GC.level = 1;
         Time.timeScale = 1f;
         GC.ResetPoints();
         GC.ChangeMultiplier(0);
+        GC.ResetPowerUps();
         SceneManager.LoadScene(1);
     }
 
@@ -114,6 +136,7 @@ public class PlayerUI : MonoBehaviour
     public void Resume()
     //Purpose:          Resumes time and closes pause window if button is chosen
     {
+        FindObjectOfType<AudioManager>().Play("ButtonPress");
         PauseUI.SetActive(false);
         Time.timeScale = 1f;
         paused = false;
@@ -127,7 +150,13 @@ public class PlayerUI : MonoBehaviour
         GC.level = 1;
         Time.timeScale = 1f;
         GC.ResetPoints();
+        GC.ResetPowerUps();
         GC.ChangeMultiplier(0);
+        FindObjectOfType<AudioManager>().Stop("RegularLevel");
+        FindObjectOfType<AudioManager>().Stop("Boss");
+        FindObjectOfType<AudioManager>().Stop("GameOver");
+        FindObjectOfType<AudioManager>().Play("MainMenu");
+        FindObjectOfType<AudioManager>().Play("ButtonPress");
         SceneManager.LoadScene("Menu");
         Debug.Log("Bringing to the menu...");
     }
@@ -137,6 +166,7 @@ public class PlayerUI : MonoBehaviour
     //Purpose:          Quits the application if button is chosen
     {
         Debug.Log("Exiting the game...");
+        FindObjectOfType<AudioManager>().Play("ButtonPress");
         Application.Quit();
     }
 }

@@ -231,7 +231,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 5844477651261229127}
-  attackRange: 0.5
+  lightAttackRange: 0.8
+  heavyAttackRange: 0.9
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -401,7 +402,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5844477651261229124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.183, y: 0, z: 0}
+  m_LocalPosition: {x: 0.183, y: -0.178, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2303103515420140239}

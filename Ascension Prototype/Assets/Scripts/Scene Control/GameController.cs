@@ -1,22 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     public int level;
-    public string playerName;
     private int points;
     private int multiplier;
     private static GameObject instance;
     public GameObject cam;
     private bool camSpawn;
-
     public float time;
     public float bonus;
 
     public bool addEntry;
+
+    //Power up variables
+    public int damageUp;
+    public int jumpUp;
+    public int movementUp;
+    public float damageMultiplier;
+    public float movementMultiplier;
+    public float jumpMultiplier;
 
     private void Awake()
     {
@@ -28,23 +33,44 @@ public class GameController : MonoBehaviour
         level = 1;
         points = 0;
         multiplier = 0;
-        if (string.IsNullOrEmpty(MainMenu.playerName))
-            playerName = "Player";
-        else
-            playerName = MainMenu.playerName;
-
-        int scene = SceneManager.GetActiveScene().buildIndex;
-        //FindObjectOfType<AudioManager>().Stop("MainMenu");
-        if (scene == 1)
-        {
-            FindObjectOfType<AudioManager>().Play("RegularLevel");
-            Debug.Log("test");
-        }
-        if (scene == 2)
-            FindObjectOfType<AudioManager>().Play("Boss");
+        ResetPowerUps();
         DontDestroyOnLoad(gameObject);
     }
-    
+
+    public void DamagePowerUp()
+    {
+        damageUp++;
+        damageMultiplier += 0.3f;
+        FindObjectOfType<PowerUpsUI>().AddDamage(damageUp);
+        FindObjectOfType<TextController>().UpdatePowerUps(1);
+    }
+
+    public void MovementPowerUp()
+    {
+        movementUp++;
+        movementMultiplier += 0.01f;
+        FindObjectOfType<PowerUpsUI>().AddMovement(movementUp);
+        FindObjectOfType<TextController>().UpdatePowerUps(2);
+    }
+
+    public void JumpPowerUp()
+    {
+        jumpUp++;
+        jumpMultiplier += 0.04f;
+        FindObjectOfType<PowerUpsUI>().AddJump(jumpUp);
+        FindObjectOfType<TextController>().UpdatePowerUps(3);
+    }
+
+    public void ResetPowerUps()
+    {
+        damageUp = 0;
+        movementUp = 0;
+        jumpUp = 0;
+        damageMultiplier = 1f;
+        movementMultiplier = 1f;
+        jumpMultiplier = 1f;
+    }
+
 
     public void AddPoints(int add)
     {

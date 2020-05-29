@@ -46,7 +46,7 @@ MonoBehaviour:
   sounds:
   - name: BossCrash
     clip: {fileID: 8300000, guid: a82c27e742438a243b2fb97c9dc32f66, type: 3}
-    volume: 0.2
+    volume: 0.15
     pitch: 1
     source: {fileID: 0}
     loop: 0
@@ -140,3 +140,48 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
     loop: 1
+  - name: ForceField
+    clip: {fileID: 8300000, guid: 47cbdeaf545783e4fa117d7165959518, type: 3}
+    volume: 0.3
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Bonus
+    clip: {fileID: 8300000, guid: a5f98e7c82a58334db7093b6185e1afe, type: 3}
+    volume: 0.1
+    pitch: 0.9
+    source: {fileID: 0}
+    loop: 0
+  - name: Victory
+    clip: {fileID: 8300000, guid: cf63c4045b1d94240a4bb6a3cb8a6b12, type: 3}
+    volume: 0.1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: BossDeath
+    clip: {fileID: 8300000, guid: 2620a89c3959c72479537e5aca168d33, type: 3}
+    volume: 0.15
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PlayerDeath
+    clip: {fileID: 8300000, guid: 7cae9df344cea954b8095b0b273c69bb, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: GameOver
+    clip: {fileID: 8300000, guid: 310ae7b4d376f6045a9160bbf2c859d6, type: 3}
+    volume: 0.15
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: PowerUp
+    clip: {fileID: 8300000, guid: 9331a9190183c474497434995860287e, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  regularAudio: 0
+  startAtBoss: 0
+  mixer: {fileID: 24300002, guid: b1f2d23eb87352345959cff7ead3b7aa, type: 2}
